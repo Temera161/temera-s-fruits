@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Orders - Temera</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+        // Function 1: Add product message (parameter passing + alert)
+        function addProduct(productName, price, qtyInput) {
+            let qty = document.getElementById(qtyInput).value;
+
+            if (qty === "" || qty <= 0) {
+                alert("⚠️ Please enter a valid quantity for " + productName);
+                return;
+            }
+
+            alert("✅ " + qty + " x " + productName + " added at R" + price + " each.");
+        }
+
+        // Function 2: Validate customer information
+        function validateForm(event) {
+            event.preventDefault();
+
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let address = document.getElementById("address").value.trim();
+
+            if (name === "" || email === "" || phone === "" || address === "") {
+                alert("⚠️ Please fill in all customer details!");
+                return false;
+            }
+
+            confirmOrder(name);
+        }
+
+        // Function 3: Confirm order with alert (message box)
+        function confirmOrder(customerName) {
+            alert("🎉 Thank you " + customerName + "! Your order has been placed successfully.");
+            document.getElementById("orderForm").reset();
+        }
+    </script>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-top">
+            <div class="logo-area">
+                <img src="img/logo.webp" alt="Logo" />
+            </div>
+        </div>
+
+        <div class="main-nav">
+            <ul class="nav-left">
+                <li><a href="index.html">HOME</a></li>
+                <li class="active"><a href="order.html">ORDERS</a></li>
+                <li><a href="contactUs.html">ABOUT US</a></li>
+            </ul>
+        </div>
+
+        <!-- Product Section -->
+        <section class="product-grid">
+            <h2>Place Your Order</h2>
+            <div class="grid-container">
+                <div class="product-card">
+                    <img src="img/apples.png" alt="Apples" />
+                    <h3>Apples</h3>
+                    <p>R25/kg</p>
+                    <input type="number" id="qtyApples" placeholder="Qty (kg)" min="1" />
+                    <a href="#" class="btn add-to-cart" onclick="addProduct('Apples', 25, 'qtyApples')">Add to Order</a>
+                </div>
+                <div class="product-card">
+                    <img src="img/bananas.webp" alt="Bananas" />
+                    <h3>Bananas</h3>
+                    <p>R20/kg</p>
+                    <input type="number" id="qtyBananas" placeholder="Qty (kg)" min="1" />
+                    <a href="#" class="btn add-to-cart" onclick="addProduct('Bananas', 20, 'qtyBananas')">Add to
+                        Order</a>
+                </div>
+                <div class="product-card">
+                    <img src="img/spinach.png" alt="Spinach" />
+                    <h3>Spinach</h3>
+                    <p>R15/bunch</p>
+                    <input type="number" id="qtySpinach" placeholder="Qty" min="1" />
+                    <a href="#" class="btn add-to-cart" onclick="addProduct('Spinach', 15, 'qtySpinach')">Add to
+                        Order</a>
+                </div>
+                <div class="product-card">
+                    <img src="img/tomatoes.png" alt="Tomatoes" />
+                    <h3>Tomatoes</h3>
+                    <p>R18/kg</p>
+                    <input type="number" id="qtyTomatoes" placeholder="Qty (kg)" min="1" />
+                    <a href="#" class="btn add-to-cart" onclick="addProduct('Tomatoes', 18, 'qtyTomatoes')">Add to
+                        Order</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Order Form Section -->
+        <section class="containers">
+            <h2>Complete Your Order</h2>
+            <form id="orderForm" class="order-form-grid" onsubmit="validateForm(event)">
+                <!-- Customer Info -->
+                <input type="text" id="name" placeholder="Full Name" required />
+                <input type="email" id="email" placeholder="Email Address" required />
+                <input type="tel" id="phone" placeholder="Phone Number" required />
+                <input type="text" id="address" placeholder="Delivery Address" required />
+
+                <button type="submit" class="btn">Place Order</button>
+            </form>
+        </section>
+    </header>
+    <script>
+        // Array to hold selected products
+        let selectedProducts = [];
+
+        // Function 1: Add product into array + textarea
+        function addProduct(productName, price, qtyInput) {
+            let qty = document.getElementById(qtyInput).value;
+
+            if (qty === "" || qty <= 0) {
+                alert("⚠️ Please enter a valid quantity for " + productName);
+                return;
+            }
+
+            let total = price * qty;
+            let productInfo = qty + " x " + productName + " (R" + price + " each) = R" + total;
+
+            selectedProducts.push(productInfo);
+
+            // Update textarea with products
+            document.getElementById("cartSummary").value = selectedProducts.join("\n");
+
+            alert("✅ " + productInfo + " added to your order.");
+        }
+
+        // Function 2: Validate customer information
+        function validateForm(event) {
+            event.preventDefault();
+
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let address = document.getElementById("address").value.trim();
+
+            if (name === "" || email === "" || phone === "" || address === "") {
+                alert("⚠️ Please fill in all customer details!");
+                return false;
+            }
+
+            if (selectedProducts.length === 0) {
+                alert("⚠️ Please select at least one product before placing the order.");
+                return false;
+            }
+
+            confirmOrder(name, email, phone, address);
+        }
+
+        // Function 3: Confirm order (show all info in alert)
+        function confirmOrder(name, email, phone, address) {
+            let orderDetails = " Order Confirmation\n\n";
+            orderDetails += " Name: " + name + "\n";
+            orderDetails += " Email: " + email + "\n";
+            orderDetails += " Phone: " + phone + "\n";
+            orderDetails += " Address: " + address + "\n\n";
+            orderDetails += " Products:\n" + selectedProducts.join("\n");
+
+            alert(orderDetails);
+
+            // Reset form and selections
+            document.getElementById("orderForm").reset();
+            document.getElementById("cartSummary").value = "";
+            selectedProducts = [];
+        }
+
+        // Redirect to login if not logged in
+        if (localStorage.getItem("loggedIn") !== "true") {
+            alert("⚠️ Please log in before placing an order!");
+            window.location.href = "login.html";
+            return;
+        }
+
+    </script>
+    <footer class="blur-footer">
+        <p>&copy; 2025 Temera's Fruits & Vegetables. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

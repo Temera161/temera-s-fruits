@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Contact Us - Temera</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header>
+    <div class="header-top">
+        <div class="logo-area">
+            <img src="img/logo.webp" alt="Logo" />
+        </div>
+    </div>
+
+    <div class="main-nav">
+        <ul class="nav-left">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="order.html">ORDERS</a></li>
+            <li class="active"><a href="contactUs.html">ABOUT US</a></li>
+        </ul>
+    </div>
+
+    <section class="welcome-text-box">
+        <h2>Contact Temera's Fruits & Vegetables</h2>
+        <p>We'd love to hear from you! Reach out using the form or contact info below.</p>
+    </section>
+
+    <div class="contact-container">
+        <!-- Left side: contact information -->
+        <div class="contact-info">
+            <h3>Contact Information</h3>
+            <ul>
+                <li><strong>Phone:</strong> +27 123 456 7890</li>
+                <li><strong>Email:</strong> <a href="mailto:info@temera.co.za">info@temera.co.za</a></li>
+                <li><strong>Address:</strong> 123 Fresh Farm Road, Namakgale, Limpopo</li>
+            </ul>
+            <p>Customer service available Monday to Friday, 8 AM to 5 PM.</p>
+        </div>
+
+        <!-- Right side: contact form -->
+        <div class="contact-form">
+            <form id="contactForm">
+                <input type="text" id="contactName" placeholder="Your Name" required />
+                <input type="email" id="contactEmail" placeholder="Your Email" required />
+                <textarea id="contactMessage" placeholder="Your Message" required rows="5"></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</header>
+
+<footer class="blur-footer">
+    <p>&copy; 2025 Temera's Fruits & Vegetables. All rights reserved.</p>
+</footer>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("contactName").value.trim();
+    const email = document.getElementById("contactEmail").value.trim();
+    const message = document.getElementById("contactMessage").value.trim();
+
+    if (!name || !email || !message) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    alert(`Thank you, ${name}! Your message has been sent.\nWe will reply to ${email} as soon as possible.`);
+
+    this.reset();
+});
+</script>
+
+</body>
+</html>
